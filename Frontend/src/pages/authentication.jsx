@@ -37,11 +37,18 @@ export default function Authentication() {
     const { handleRegister, handleLogin } = React.useContext(AuthContext);
 
     let handleAuth = async () => {
+        setError('');
         try {
             if (formState === 0) {
                 // Login with email
                 if (!email || !password) {
                     setError("Email and Password are required");
+                    return;
+                }
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    setError("Please enter a valid email address");
                     return;
                 }
                 await handleLogin(email, password);
@@ -50,6 +57,17 @@ export default function Authentication() {
                 // Register with name, username, email, password
                 if (!name || !username || !email || !password) {
                     setError("All fields are required");
+                    return;
+                }
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    setError("Please enter a valid email address");
+                    return;
+                }
+                // Password strength validation
+                if (password.length < 6) {
+                    setError("Password must be at least 6 characters long");
                     return;
                 }
                 let result = await handleRegister(name, username, email, password);
@@ -64,8 +82,8 @@ export default function Authentication() {
                 setFormState(0);
             }
         } catch (err) {
-            console.log(err);
-            let message = err.response?.data?.message || "An error occurred";
+            console.error('Auth error:', err);
+            let message = err.response?.data?.message || err.message || "An error occurred. Please try again.";
             setError(message);
         }
     }
@@ -87,6 +105,7 @@ export default function Authentication() {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         position: 'relative',
+                        display: { xs: 'none', sm: 'block' },
                         '&::before': {
                             content: '""',
                             position: 'absolute',
@@ -111,10 +130,19 @@ export default function Authentication() {
                             padding: 4,
                         }}
                     >
-                        <h1 style={{ fontSize: '3rem', fontWeight: 'bold', marginBottom: '1rem' }}>
+                        <h1 style={{ 
+                            fontSize: 'clamp(2rem, 4vw, 3rem)', 
+                            fontWeight: 'bold', 
+                            marginBottom: '1rem',
+                            textAlign: 'center'
+                        }}>
                             Welcome to <span style={{ color: '#FF9839' }}>MeetConnect</span>
                         </h1>
-                        <p style={{ fontSize: '1.5rem', textAlign: 'center', maxWidth: '600px' }}>
+                        <p style={{ 
+                            fontSize: 'clamp(1rem, 2vw, 1.5rem)', 
+                            textAlign: 'center', 
+                            maxWidth: '600px' 
+                        }}>
                             Connect with your loved ones through seamless video calls and chat
                         </p>
                     </Box>
@@ -122,22 +150,28 @@ export default function Authentication() {
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <Box
                         sx={{
-                            my: 8,
-                            mx: 4,
+                            my: { xs: 4, sm: 8 },
+                            mx: { xs: 2, sm: 4 },
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: '#FF9839', width: 56, height: 56 }}>
-                            <LockOutlinedIcon sx={{ fontSize: 32 }} />
+                        <Avatar sx={{ m: 1, bgcolor: '#FF9839', width: { xs: 48, sm: 56 }, height: { xs: 48, sm: 56 } }}>
+                            <LockOutlinedIcon sx={{ fontSize: { xs: 24, sm: 32 } }} />
                         </Avatar>
 
-                        <h2 style={{ marginTop: '1rem', marginBottom: '2rem', color: '#333' }}>
+                        <h2 style={{ 
+                            marginTop: '1rem', 
+                            marginBottom: '2rem', 
+                            color: '#333',
+                            fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
+                            textAlign: 'center'
+                        }}>
                             {formState === 0 ? 'Sign In to Your Account' : 'Create New Account'}
                         </h2>
 
-                        <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+                        <Box sx={{ display: 'flex', gap: { xs: 1, sm: 2 }, mb: 3, flexWrap: 'wrap', justifyContent: 'center' }}>
                             <Button 
                                 variant={formState === 0 ? "contained" : "outlined"} 
                                 onClick={() => { 
@@ -145,11 +179,11 @@ export default function Authentication() {
                                     setError('');
                                 }}
                                 sx={{
-                                    px: 4,
-                                    py: 1.5,
+                                    px: { xs: 2, sm: 4 },
+                                    py: { xs: 1, sm: 1.5 },
                                     borderRadius: 2,
                                     textTransform: 'none',
-                                    fontSize: '1rem',
+                                    fontSize: { xs: '0.9rem', sm: '1rem' },
                                     fontWeight: 600,
                                 }}
                             >
@@ -162,11 +196,11 @@ export default function Authentication() {
                                     setError('');
                                 }}
                                 sx={{
-                                    px: 4,
-                                    py: 1.5,
+                                    px: { xs: 2, sm: 4 },
+                                    py: { xs: 1, sm: 1.5 },
                                     borderRadius: 2,
                                     textTransform: 'none',
-                                    fontSize: '1rem',
+                                    fontSize: { xs: '0.9rem', sm: '1rem' },
                                     fontWeight: 600,
                                 }}
                             >
@@ -174,7 +208,7 @@ export default function Authentication() {
                             </Button>
                         </Box>
 
-                        <Box component="form" noValidate sx={{ mt: 1, width: '100%', maxWidth: 400 }}>
+                        <Box component="form" noValidate sx={{ mt: 1, width: '100%', maxWidth: { xs: '100%', sm: 400 } }}>
                             {formState === 1 && (
                                 <>
                                     <TextField

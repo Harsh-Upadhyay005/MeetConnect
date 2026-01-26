@@ -1,5 +1,6 @@
 import { Schema } from "mongoose";
-import { user } from "./user.model.js";
+import mongoose from "mongoose";
+
 
 const meetingSchema = new Schema ({
     user_id: {type: String },

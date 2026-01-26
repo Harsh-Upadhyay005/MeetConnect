@@ -1,0 +1,182 @@
+.landingPageContainer {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../public/background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  position: relative;
+}
+
+.landingPageContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.landingPageContainer nav {
+  position: relative;
+  z-index: 2;
+  padding-inline: 1.2rem;
+  padding-block: 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.landingPageContainer nav h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.landingPageContainer nav .navlist {
+  display: flex;
+  gap: 1.6rem;
+  cursor: pointer;
+}
+
+.landingPageContainer nav .navlist p {
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.landingPageContainer nav .navlist p:hover {
+  background: rgba(255, 152, 57, 0.3);
+  transform: translateY(-2px);
+}
+
+.landingPageContainer nav .navlist div[role='button'] {
+  transition: all 0.3s ease;
+}
+
+.landingPageContainer nav .navlist div[role='button']:hover {
+  transform: translateY(-2px);
+}
+
+.landingMainContainer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 3rem;
+  height: 80vh;
+  align-items: center;
+}
+
+.landingMainContainer>div:nth-child(1) {
+  font-size: 2.2rem;
+  animation: fadeInLeft 1s ease-out;
+}
+
+.landingMainContainer>div:nth-child(1) h1 {
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1rem;
+}
+
+.landingMainContainer>div:nth-child(1) p {
+  font-size: 1.3rem;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1rem;
+}
+
+.landingMainContainer>div:nth-child(1) div[role='button'] {
+  background: linear-gradient(45deg, #FF9839 30%, #D97500 90%);
+  width: fit-content;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  margin-top: 1.9rem;
+  box-shadow: 0 4px 15px rgba(255, 152, 57, 0.4);
+  transition: all 0.3s ease;
+}
+
+.landingMainContainer>div:nth-child(1) div[role='button']:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 152, 57, 0.6);
+}
+
+.landingMainContainer>div:nth-child(1) div[role='button'] a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.landingMainContainer>div:nth-child(2) {
+  animation: fadeInRight 1s ease-out;
+}
+
+.landingMainContainer>div:nth-child(2) img {
+  height: 70vh;
+  width: auto;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.landingMainContainer>div:nth-child(2) img:hover {
+  transform: scale(1.05);
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.navBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 20px;
+  text-align: center;
+
+}
+.meetContainer {
+  display: flex;
+  padding-inline: 20px;
+  height: 80vh;
+  gap: 10vw;
+  justify-content: center;
+}
+
+
+
+.leftPanel {
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+}
+
+.rightPanel {
+  display: flex;
+  align-items: center;
+}
+
+.rightPanel > img {
+  width: 30vw;
+  height: auto;
+  border-radius: 20px;
+}

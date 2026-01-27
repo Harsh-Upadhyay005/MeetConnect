@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
                     token: localStorage.getItem("token")
                 }
             });
-            return request.data
+            return request.data.user.activities || []
         } catch (err) {
             throw err;
         }

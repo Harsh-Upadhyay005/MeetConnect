@@ -3,6 +3,20 @@ import {User} from "../Models/user.model.js";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 
+// Helper function to get userId from token
+const getUserIdFromToken = async (token) => {
+    if (!token) {
+        return null;
+    }
+    try {
+        const user = await User.findOne({ token });
+        return user ? user._id : null;
+    } catch (error) {
+        console.error('Error finding user by token:', error);
+        return null;
+    }
+};
+
 const loginUser = async (req, res) => {
     const {email, password} = req.body;
     if(!email || !password) {
@@ -33,10 +47,41 @@ const registerUser = async (req, res) => {
     const {name, username, email, password} = req.body;
 
     try {
+        // Validate required fields
+        if (!name || !username || !email || !password) {
+            return res.status(httpStatus.BAD_REQUEST).json({
+                message: "All fields are required (name, username, email, password)."
+            });
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(httpStatus.BAD_REQUEST).json({
+                message: "Please provide a valid email address."
+            });
+        }
+
+        // Password strength validation
+        if (password.length < 6) {
+            return res.status(httpStatus.BAD_REQUEST).json({
+                message: "Password must be at least 6 characters long."
+            });
+        }
+
         const existingUser = await User.findOne({$or: [{email}, {username}]});
         if (existingUser) {
-            return res.status(httpStatus.FOUND).json({message: "User with this email or username already exists."});
+            if (existingUser.email === email) {
+                return res.status(httpStatus.CONFLICT).json({
+                    message: "An account with this email already exists."
+                });
+            } else {
+                return res.status(httpStatus.CONFLICT).json({
+                    message: "This username is already taken."
+                });
+            }
         }
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
             name, 
@@ -46,20 +91,37 @@ const registerUser = async (req, res) => {
         });
 
         await newUser.save();
-        res.status(httpStatus.CREATED).json({message: "User registered successfully."});
+        res.status(httpStatus.CREATED).json({
+            message: "Account created successfully! You can now sign in.",
+            user: {
+                id: newUser._id,
+                name: newUser.name,
+                username: newUser.username,
+                email: newUser.email
+            }
+        });
     } catch (error) {
-        res.status(httpStatus.INTERNAL_SERVER_ERROR).json({message: "Registration failed.", error: error.message});
+        console.error('Registration error:', error);
+        res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: "Registration failed. Please try again later.",
+            error: error.message
+        });
     }
 };
 
 const getToActivity = async (req, res) => {
-    const {userId} = req.query;
+    const {token} = req.query;
     
-    if (!userId) {
-        return res.status(httpStatus.BAD_REQUEST).json({message: "User ID is required."});
+    if (!token) {
+        return res.status(httpStatus.BAD_REQUEST).json({message: "Token is required."});
     }
     
     try {
+        const userId = await getUserIdFromToken(token);
+        if (!userId) {
+            return res.status(httpStatus.UNAUTHORIZED).json({message: "Invalid token."});
+        }
+        
         const user = await User.findById(userId).select('activities name username');
         if (!user) {
             return res.status(httpStatus.NOT_FOUND).json({message: "User not found."});
@@ -80,13 +142,18 @@ const getToActivity = async (req, res) => {
 
 
 const addToActivity = async (req, res) => {
-    const {userId, activity} = req.body;
+    const {token, meeting_code} = req.body;
     
-    if (!userId || !activity) {
-        return res.status(httpStatus.BAD_REQUEST).json({message: "User ID and activity are required."});
+    if (!token || !meeting_code) {
+        return res.status(httpStatus.BAD_REQUEST).json({message: "Token and meeting code are required."});
     }
     
     try {
+        const userId = await getUserIdFromToken(token);
+        if (!userId) {
+            return res.status(httpStatus.UNAUTHORIZED).json({message: "Invalid token."});
+        }
+        
         const user = await User.findById(userId);
         if (!user) {
             return res.status(httpStatus.NOT_FOUND).json({message: "User not found."});
@@ -98,7 +165,7 @@ const addToActivity = async (req, res) => {
         }
         
         user.activities.push({
-            activity,
+            activity: meeting_code,
             timestamp: new Date()
         });
         

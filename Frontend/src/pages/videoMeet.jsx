@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import io from "socket.io-client";
-import { Badge, IconButton, TextField } from '@mui/material';
+import { Badge, IconButton, TextField, Box, Typography, Paper } from '@mui/material';
 import { Button } from '@mui/material';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff'
@@ -11,6 +11,7 @@ import MicOffIcon from '@mui/icons-material/MicOff'
 import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 import StopScreenShareIcon from '@mui/icons-material/StopScreenShare'
 import ChatIcon from '@mui/icons-material/Chat'
+import SendIcon from '@mui/icons-material/Send'
 import server from '../environment';
 
 
@@ -457,19 +458,114 @@ export default function VideoMeetComponent() {
 
             {askForUsername === true ?
 
-                <div>
+                <Box sx={{ 
+                    minHeight: '100vh',
+                    background: 'linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff9ff3 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '2rem'
+                }}>
+                    <Paper elevation={8} sx={{
+                        padding: { xs: '2rem', md: '3rem' },
+                        borderRadius: '24px',
+                        maxWidth: '500px',
+                        width: '100%',
+                        textAlign: 'center',
+                        background: 'rgba(255, 255, 255, 0.95)',
+                        backdropFilter: 'blur(10px)'
+                    }}>
+                        <Typography variant="h4" sx={{ 
+                            fontWeight: 800,
+                            marginBottom: '1rem',
+                            background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent'
+                        }}>
+                            Join Meeting Lobby
+                        </Typography>
+                        
+                        <Typography variant="body1" sx={{ 
+                            color: '#636e72',
+                            marginBottom: '2rem',
+                            fontSize: '1rem'
+                        }}>
+                            Enter your name to join the video call
+                        </Typography>
 
+                        <Box sx={{ 
+                            marginBottom: '2rem',
+                            background: '#000',
+                            borderRadius: '16px',
+                            overflow: 'hidden',
+                            boxShadow: '0 8px 20px rgba(0,0,0,0.2)'
+                        }}>
+                            <video 
+                                ref={localVideoref} 
+                                autoPlay 
+                                muted
+                                style={{
+                                    width: '100%',
+                                    height: 'auto',
+                                    maxHeight: '300px',
+                                    objectFit: 'cover'
+                                }}
+                            ></video>
+                        </Box>
 
-                    <h2>Enter into Lobby </h2>
-                    <TextField id="outlined-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)} variant="outlined" />
-                    <Button variant="contained" onClick={connect}>Connect</Button>
-
-
-                    <div>
-                        <video ref={localVideoref} autoPlay muted></video>
-                    </div>
-
-                </div> :
+                        <TextField 
+                            value={username} 
+                            onChange={e => setUsername(e.target.value)}
+                            onKeyPress={(e) => e.key === 'Enter' && connect()}
+                            placeholder="Enter your name"
+                            variant="outlined"
+                            fullWidth
+                            sx={{
+                                marginBottom: '1.5rem',
+                                '& .MuiOutlinedInput-root': {
+                                    fontSize: '1.1rem',
+                                    '& fieldset': {
+                                        borderColor: '#dfe6e9',
+                                        borderWidth: '2px'
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: '#ff6b6b',
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: '#ff6b6b',
+                                    },
+                                }
+                            }}
+                        />
+                        
+                        <Button 
+                            variant="contained" 
+                            onClick={connect}
+                            fullWidth
+                            disabled={!username.trim()}
+                            sx={{
+                                background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)',
+                                padding: '1rem',
+                                fontSize: '1.1rem',
+                                fontWeight: 700,
+                                borderRadius: '12px',
+                                textTransform: 'none',
+                                boxShadow: '0 8px 25px rgba(255, 107, 107, 0.35)',
+                                '&:hover': {
+                                    background: 'linear-gradient(135deg, #ee5a6f 0%, #ff6b6b 100%)',
+                                    boxShadow: '0 12px 35px rgba(255, 107, 107, 0.5)',
+                                    transform: 'translateY(-2px)',
+                                },
+                                '&:disabled': {
+                                    background: '#ccc',
+                                    boxShadow: 'none'
+                                }
+                            }}
+                        >
+                            Join Now
+                        </Button>
+                    </Paper>
+                </Box> :
 
 
                 <div className={styles.meetVideoContainer}>
@@ -477,27 +573,135 @@ export default function VideoMeetComponent() {
                     {showModal ? <div className={styles.chatRoom}>
 
                         <div className={styles.chatContainer}>
-                            <h1>Chat</h1>
+                            <Box sx={{ 
+                                background: 'linear-gradient(135deg, #2d3436 0%, #636e72 100%)',
+                                padding: '1rem',
+                                borderRadius: '20px 20px 0 0',
+                                marginBottom: '1rem',
+                                marginTop: '-1rem',
+                                marginLeft: '-1rem',
+                                marginRight: '-1rem',
+                                
+                            }}>
+                                <Typography variant="h6" sx={{ 
+                                    color: '#fff',
+                                    fontWeight: 700,
+                                    textAlign: 'center'
+                                }}>
+                                    Chat
+                                </Typography>
+                            </Box>
 
                             <div className={styles.chattingDisplay}>
 
                                 {messages.length !== 0 ? messages.map((item, index) => {
 
                                     console.log(messages)
+                                    const isMe = item.sender === username;
                                     return (
-                                        <div style={{ marginBottom: "20px" }} key={index}>
-                                            <p style={{ fontWeight: "bold" }}>{item.sender}</p>
-                                            <p>{item.data}</p>
-                                        </div>
+                                        <Box 
+                                            key={index}
+                                            sx={{ 
+                                                marginBottom: '1rem',
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                alignItems: isMe ? 'flex-end' : 'flex-start',
+                                                
+                                            }}
+                                        >
+                                            <Typography sx={{ 
+                                                fontWeight: 600,
+                                                fontSize: '0.85rem',
+                                                color: '#636e72',
+                                                marginBottom: '0.25rem'
+                                            }}>
+                                                {item.sender}
+                                            </Typography>
+                                            <Paper sx={{ 
+                                                padding: '0.75rem 1rem',
+                                                background: isMe 
+                                                    ? 'linear-gradient(135deg, #636e72 0%, #2d3436 100%)' 
+                                                    : '#f0f0f0',
+                                                color: isMe ? '#fff' : '#2d3436',
+                                                borderRadius: isMe 
+                                                    ? '12px 12px 2px 12px' 
+                                                    : '12px 12px 12px 2px',
+                                                maxWidth: '80%',
+                                                wordWrap: 'break-word',
+                                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                                                
+                                                
+                                            }}>
+                                                <Typography sx={{ fontSize: '0.95rem' }}>
+                                                    {item.data}
+                                                </Typography>
+                                            </Paper>
+                                        </Box>
                                     )
-                                }) : <p>No Messages Yet</p>}
+                                }) : <Box sx={{ 
+                                    textAlign: 'center',
+                                    padding: '2rem',
+                                    color: '#999',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    height: '100px'
+                                }}>
+                                    <ChatIcon sx={{ fontSize: '3rem', marginBottom: '1rem' }} />
+                                    <Typography>No messages yet. Start the conversation!</Typography>
+                            
+                                </Box>}
 
 
                             </div>
 
                             <div className={styles.chattingArea}>
-                                <TextField value={message} onChange={(e) => setMessage(e.target.value)} id="outlined-basic" label="Enter Your chat" variant="outlined" />
-                                <Button variant='contained' onClick={sendMessage}>Send</Button>
+                                <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-end' }}>
+                                    <TextField 
+                                        value={message} 
+                                        onChange={(e) => setMessage(e.target.value)}
+                                        onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                                        placeholder="Type a message"
+                                        variant="outlined"
+                                        fullWidth
+                                        multiline
+                                        maxRows={3}
+                                        
+                                        
+                                        sx={{
+                                            '& .MuiOutlinedInput-root': {
+                                                '& fieldset': {
+                                                    borderColor: '#dfe6e9',
+                                                },
+                                                '&:hover fieldset': {
+                                                    borderColor: '#636e72',
+                                                },
+                                                '&.Mui-focused fieldset': {
+                                                    borderColor: '#2d3436',
+                                                },
+                                            }
+                                        }}
+                                    />
+                                    <IconButton 
+                                        onClick={sendMessage}
+                                        disabled={!message.trim()}
+                                        sx={{
+                                            background: 'linear-gradient(135deg, #636e72 0%, #2d3436 100%)',
+                                            color: '#fff',
+                                            padding: '0.75rem',
+                                            '&:hover': {
+                                                background: 'linear-gradient(135deg, #2d3436 0%, #636e72 100%)',
+                                            },
+                                            '&:disabled': {
+                                                background: '#ccc',
+                                                color: '#999'
+                                            }
+                                        }}
+                                    >
+                                        <SendIcon />
+                                    </IconButton>
+                                </Box>
                             </div>
 
 
@@ -506,24 +710,99 @@ export default function VideoMeetComponent() {
 
 
                     <div className={styles.buttonContainers}>
-                        <IconButton onClick={handleVideo} style={{ color: "white" }}>
+                        <IconButton 
+                            onClick={handleVideo}
+                            sx={{
+                                backgroundColor: video ? 'rgba(255, 255, 255, 0.25)' : 'rgba(231, 76, 60, 0.9)',
+                                color: '#fff',
+                                margin: '0 0.5rem',
+                                padding: '1rem',
+                                transition: 'all 0.3s ease',
+                                backdropFilter: 'blur(10px)',
+                                '&:hover': {
+                                    backgroundColor: video ? 'rgba(255, 255, 255, 0.35)' : 'rgba(231, 76, 60, 1)',
+                                    transform: 'translateY(-3px)',
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                                }
+                            }}
+                        >
                             {(video === true) ? <VideocamIcon /> : <VideocamOffIcon />}
                         </IconButton>
-                        <IconButton onClick={handleEndCall} style={{ color: "red" }}>
+                        <IconButton 
+                            onClick={handleEndCall}
+                            sx={{
+                                backgroundColor: '#e74c3c',
+                                color: '#fff',
+                                margin: '0 0.5rem',
+                                padding: '1.2rem',
+                                transition: 'all 0.3s ease',
+                                '&:hover': {
+                                    backgroundColor: '#c0392b',
+                                    transform: 'scale(1.15) translateY(-3px)',
+                                    boxShadow: '0 8px 20px rgba(231, 76, 60, 0.5)'
+                                }
+                            }}
+                        >
                             <CallEndIcon  />
                         </IconButton>
-                        <IconButton onClick={handleAudio} style={{ color: "white" }}>
+                        <IconButton 
+                            onClick={handleAudio}
+                            sx={{
+                                backgroundColor: audio ? 'rgba(255, 255, 255, 0.25)' : 'rgba(231, 76, 60, 0.9)',
+                                color: '#fff',
+                                margin: '0 0.5rem',
+                                padding: '1rem',
+                                transition: 'all 0.3s ease',
+                                backdropFilter: 'blur(10px)',
+                                '&:hover': {
+                                    backgroundColor: audio ? 'rgba(255, 255, 255, 0.35)' : 'rgba(231, 76, 60, 1)',
+                                    transform: 'translateY(-3px)',
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                                }
+                            }}
+                        >
                             {audio === true ? <MicIcon /> : <MicOffIcon />}
                         </IconButton>
 
                         {screenAvailable === true ?
-                            <IconButton onClick={handleScreen} style={{ color: "white" }}>
+                            <IconButton 
+                                onClick={handleScreen}
+                                sx={{
+                                    backgroundColor: screen ? 'rgba(46, 213, 115, 0.9)' : 'rgba(255, 255, 255, 0.25)',
+                                    color: '#fff',
+                                    margin: '0 0.5rem',
+                                    padding: '1rem',
+                                    transition: 'all 0.3s ease',
+                                    backdropFilter: 'blur(10px)',
+                                    '&:hover': {
+                                        backgroundColor: screen ? 'rgba(46, 213, 115, 1)' : 'rgba(255, 255, 255, 0.35)',
+                                        transform: 'translateY(-3px)',
+                                        boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                                    }
+                                }}
+                            >
                                 {screen === true ? <ScreenShareIcon /> : <StopScreenShareIcon />}
                             </IconButton> : <></>}
 
-                        <Badge badgeContent={newMessages} max={999} color='orange'>
-                            <IconButton onClick={() => setModal(!showModal)} style={{ color: "white" }}>
-                                <ChatIcon />                        </IconButton>
+                        <Badge badgeContent={newMessages} max={999} color='error'>
+                            <IconButton 
+                                onClick={() => setModal(!showModal)}
+                                sx={{
+                                    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                                    color: '#fff',
+                                    margin: '0 0.5rem',
+                                    padding: '1rem',
+                                    transition: 'all 0.3s ease',
+                                    backdropFilter: 'blur(10px)',
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(255, 255, 255, 0.35)',
+                                        transform: 'translateY(-3px)',
+                                        boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                                    }
+                                }}
+                            >
+                                <ChatIcon />
+                            </IconButton>
                         </Badge>
 
                     </div>

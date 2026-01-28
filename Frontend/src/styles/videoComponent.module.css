@@ -76,7 +76,7 @@
 }
 
 .conferenceView video {
-    width: 40vw;
+    width: 30vw;
     height: 30vh;
     min-width: 320px;
     max-width: 600px;

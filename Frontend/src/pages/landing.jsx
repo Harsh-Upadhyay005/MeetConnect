@@ -14,29 +14,27 @@ export default function LandingPage() {
     return (
         <Box sx={{ 
             minHeight: '100vh',
-            background: 'linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff9ff3 100%)',
+            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
             display: 'flex',
             flexDirection: 'column'
         }}>
             {/* Navigation Bar */}
             <Box sx={{
-                backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                backgroundColor: 'rgba(26, 26, 46, 0.95)',
                 backdropFilter: 'blur(10px)',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
                 padding: { xs: '1rem 1.5rem', md: '1.2rem 3rem' },
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
                 <Typography variant="h5" sx={{ 
-                    fontWeight: 800,
-                    background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
+                    fontWeight: 700,
+                    color: '#ffffff',
                     fontSize: { xs: '1.3rem', md: '1.8rem' },
                     letterSpacing: '-0.5px'
                 }}>
-                    Meet Connect
+                    Meet<span style={{ color: '#66F4FF' }}>Connect</span>
                 </Typography>
 
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, md: 2 } }}>
@@ -44,14 +42,14 @@ export default function LandingPage() {
                         startIcon={<VideocamIcon />}
                         onClick={() => router("/aljk23")}
                         sx={{ 
-                            color: '#ff6b6b',
-                            fontWeight: 600,
+                            color: '#7D99AA',
+                            fontWeight: 500,
                             textTransform: 'none',
-                            fontSize: { xs: '0.85rem', md: '1rem' },
+                            fontSize: { xs: '0.85rem', md: '0.95rem' },
                             display: { xs: 'none', sm: 'flex' },
                             '&:hover': { 
-                                backgroundColor: 'rgba(255, 107, 107, 0.1)',
-                                transform: 'translateY(-2px)',
+                                backgroundColor: 'rgba(102, 244, 255, 0.1)',
+                                color: '#66F4FF',
                                 transition: 'all 0.3s ease'
                             }
                         }}
@@ -62,13 +60,13 @@ export default function LandingPage() {
                         startIcon={<PersonAddIcon />}
                         onClick={() => router("/auth")}
                         sx={{ 
-                            color: '#ff6b6b',
-                            fontWeight: 600,
+                            color: '#7D99AA',
+                            fontWeight: 500,
                             textTransform: 'none',
-                            fontSize: { xs: '0.85rem', md: '1rem' },
+                            fontSize: { xs: '0.85rem', md: '0.95rem' },
                             '&:hover': { 
-                                backgroundColor: 'rgba(255, 107, 107, 0.1)',
-                                transform: 'translateY(-2px)',
+                                backgroundColor: 'rgba(102, 244, 255, 0.1)',
+                                color: '#66F4FF',
                                 transition: 'all 0.3s ease'
                             }
                         }}
@@ -78,19 +76,17 @@ export default function LandingPage() {
                     <Button 
                         startIcon={<LoginIcon />}
                         onClick={() => router("/auth")}
-                        variant="outlined"
+                        variant="contained"
                         sx={{ 
-                            borderColor: '#ff6b6b',
-                            color: '#ff6b6b',
+                            background: 'linear-gradient(135deg, #FFC067 0%, #66C4FF 100%)',
+                            color: '#1a1a2e',
                             fontWeight: 600,
                             textTransform: 'none',
-                            fontSize: { xs: '0.85rem', md: '1rem' },
-                            borderWidth: '2px',
+                            fontSize: { xs: '0.85rem', md: '0.95rem' },
+                            boxShadow: '0 2px 8px rgba(255, 192, 103, 0.35)',
                             '&:hover': { 
-                                borderColor: '#ee5a6f',
-                                backgroundColor: 'rgba(255, 107, 107, 0.1)',
-                                borderWidth: '2px',
-                                transform: 'translateY(-2px)',
+                                background: 'linear-gradient(135deg, #FFD08A 0%, #88D4FF 100%)',
+                                boxShadow: '0 4px 12px rgba(255, 192, 103, 0.5)',
                                 transition: 'all 0.3s ease'
                             }
                         }}
@@ -105,65 +101,65 @@ export default function LandingPage() {
                 flex: 1,
                 display: 'flex',
                 alignItems: 'center',
-                padding: { xs: '2rem 1rem', md: '3rem 2rem' }
+                padding: { xs: '3rem 1rem', md: '4rem 2rem' }
             }}>
                 <Container maxWidth="lg">
-                    <Grid container spacing={4} alignItems="center">
+                    <Grid container spacing={6} alignItems="center">
                         {/* Left Panel - Content */}
                         <Grid item xs={12} md={6}>
                             <Box sx={{
                                 animation: 'slideInLeft 0.8s ease-out',
                                 '@keyframes slideInLeft': {
-                                    '0%': { opacity: 0, transform: 'translateX(-50px)' },
+                                    '0%': { opacity: 0, transform: 'translateX(-30px)' },
                                     '100%': { opacity: 1, transform: 'translateX(0)' }
                                 }
                             }}>
                                 <Typography variant="h2" sx={{ 
-                                    fontWeight: 900,
+                                    fontWeight: 700,
                                     marginBottom: '1.5rem',
-                                    color: '#fff',
-                                    fontSize: { xs: '2.5rem', md: '3.5rem' },
-                                    lineHeight: 1.1,
-                                    textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
+                                    color: '#ffffff',
+                                    fontSize: { xs: '2.5rem', md: '3.2rem' },
+                                    lineHeight: 1.2
                                 }}>
+                                    Connect with Your
                                     <span style={{ 
-                                        background: 'rgba(255, 255, 255, 0.95)',
+                                        background: 'linear-gradient(90deg, #FFC067, #66F4FF)',
                                         WebkitBackgroundClip: 'text',
                                         WebkitTextFillColor: 'transparent',
-                                        fontWeight: 900
-                                    }}>Connect</span> with Your Loved Ones
+                                        display: 'block',
+                                        marginTop: '0.3rem'
+                                    }}> Loved Ones</span>
                                 </Typography>
                                 
-                                <Typography variant="h5" sx={{ 
-                                    color: 'rgba(255, 255, 255, 0.95)',
-                                    marginBottom: '3rem',
-                                    fontSize: { xs: '1.2rem', md: '1.5rem' },
-                                    lineHeight: 1.6,
-                                    fontWeight: 500,
-                                    textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+                                <Typography variant="h6" sx={{ 
+                                    color: '#7D99AA',
+                                    marginBottom: '2.5rem',
+                                    fontSize: { xs: '1.1rem', md: '1.2rem' },
+                                    lineHeight: 1.7,
+                                    fontWeight: 400
                                 }}>
-                                    Cover distance with high-quality video calls. Connect anytime, anywhere.
+                                    Experience seamless high-quality video calls. Connect with anyone, anywhere, anytime.
                                 </Typography>
 
-                                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', marginBottom: '3rem' }}>
                                     <Button 
                                         onClick={() => router("/auth")}
                                         variant='contained'
                                         size="large"
                                         endIcon={<ArrowForwardIcon />}
                                         sx={{
-                                            background: 'rgba(255, 255, 255, 0.95)',
-                                            color: '#ff6b6b',
-                                            padding: '1rem 2.5rem',
-                                            fontSize: '1.1rem',
-                                            fontWeight: 700,
-                                            borderRadius: '12px',
+                                            background: 'linear-gradient(135deg, #FFC067 0%, #66C4FF 100%)',
+                                            color: '#1a1a2e',
+                                            padding: '0.9rem 2.2rem',
+                                            fontSize: '1rem',
+                                            fontWeight: 600,
+                                            borderRadius: '10px',
                                             textTransform: 'none',
-                                            boxShadow: '0 8px 25px rgba(0,0,0,0.2)',
+                                            boxShadow: '0 4px 12px rgba(255, 192, 103, 0.4)',
                                             '&:hover': {
-                                                background: '#ffffff',
-                                                boxShadow: '0 12px 35px rgba(0,0,0,0.3)',
-                                                transform: 'translateY(-3px)',
+                                                background: 'linear-gradient(135deg, #FFD08A 0%, #88D4FF 100%)',
+                                                boxShadow: '0 6px 18px rgba(255, 192, 103, 0.5)',
+                                                transform: 'translateY(-2px)',
                                                 transition: 'all 0.3s ease'
                                             }
                                         }}
@@ -177,21 +173,19 @@ export default function LandingPage() {
                                         size="large"
                                         startIcon={<VideocamIcon />}
                                         sx={{
-                                            borderColor: 'rgba(255, 255, 255, 0.9)',
-                                            color: '#ffffff',
-                                            padding: '1rem 2.5rem',
-                                            fontSize: '1.1rem',
-                                            fontWeight: 700,
-                                            borderRadius: '12px',
+                                            borderColor: '#66F4FF',
+                                            color: '#66F4FF',
+                                            padding: '0.9rem 2.2rem',
+                                            fontSize: '1rem',
+                                            fontWeight: 600,
+                                            borderRadius: '10px',
                                             textTransform: 'none',
-                                            borderWidth: '2px',
-                                            backdropFilter: 'blur(10px)',
-                                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                            borderWidth: '1.5px',
                                             '&:hover': {
-                                                borderColor: '#ffffff',
-                                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                                borderWidth: '2px',
-                                                transform: 'translateY(-3px)',
+                                                borderColor: '#66C4FF',
+                                                backgroundColor: 'rgba(102, 244, 255, 0.1)',
+                                                borderWidth: '1.5px',
+                                                transform: 'translateY(-2px)',
                                                 transition: 'all 0.3s ease'
                                             }
                                         }}
@@ -201,61 +195,97 @@ export default function LandingPage() {
                                 </Box>
 
                                 {/* Feature Highlights */}
-                                <Grid container spacing={3} sx={{ marginTop: '3rem' }}>
-                                    <Grid item xs={12} sm={4}>
-                                        <Box sx={{ textAlign: 'center' }}>
+                                <Grid container spacing={3}>
+                                    <Grid item xs={4}>
+                                        <Box sx={{ 
+                                            textAlign: 'center',
+                                            padding: '1rem',
+                                            borderRadius: '12px',
+                                            backgroundColor: 'rgba(255, 192, 103, 0.1)',
+                                            border: '1px solid rgba(255, 192, 103, 0.2)',
+                                            transition: 'all 0.3s ease',
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(255, 192, 103, 0.2)',
+                                                transform: 'translateY(-3px)',
+                                                boxShadow: '0 8px 20px rgba(255, 192, 103, 0.2)'
+                                            }
+                                        }}>
                                             <Typography sx={{ 
-                                                fontSize: '2rem', 
-                                                fontWeight: 800, 
-                                                color: '#fff',
-                                                textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
+                                                fontSize: '1.8rem', 
+                                                fontWeight: 700, 
+                                                color: '#FFC067',
+                                                marginBottom: '0.3rem'
                                             }}>
                                                 HD
                                             </Typography>
                                             <Typography sx={{ 
-                                                color: 'rgba(255, 255, 255, 0.9)', 
-                                                fontSize: '0.9rem',
-                                                fontWeight: 600 
+                                                color: '#7D99AA', 
+                                                fontSize: '0.85rem',
+                                                fontWeight: 500 
                                             }}>
-                                                Quality Video
+                                                Quality
                                             </Typography>
                                         </Box>
                                     </Grid>
-                                    <Grid item xs={12} sm={4}>
-                                        <Box sx={{ textAlign: 'center' }}>
+                                    <Grid item xs={4}>
+                                        <Box sx={{ 
+                                            textAlign: 'center',
+                                            padding: '1rem',
+                                            borderRadius: '12px',
+                                            backgroundColor: 'rgba(102, 244, 255, 0.1)',
+                                            border: '1px solid rgba(102, 244, 255, 0.2)',
+                                            transition: 'all 0.3s ease',
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(102, 244, 255, 0.2)',
+                                                transform: 'translateY(-3px)',
+                                                boxShadow: '0 8px 20px rgba(102, 244, 255, 0.2)'
+                                            }
+                                        }}>
                                             <Typography sx={{ 
-                                                fontSize: '2rem', 
-                                                fontWeight: 800, 
-                                                color: '#fff',
-                                                textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
+                                                fontSize: '1.8rem', 
+                                                fontWeight: 700, 
+                                                color: '#66F4FF',
+                                                marginBottom: '0.3rem'
                                             }}>
                                                 🔒
                                             </Typography>
                                             <Typography sx={{ 
-                                                color: 'rgba(255, 255, 255, 0.9)', 
-                                                fontSize: '0.9rem',
-                                                fontWeight: 600 
+                                                color: '#7D99AA', 
+                                                fontSize: '0.85rem',
+                                                fontWeight: 500 
                                             }}>
-                                                Secure Calls
+                                                Secure
                                             </Typography>
                                         </Box>
                                     </Grid>
-                                    <Grid item xs={12} sm={4}>
-                                        <Box sx={{ textAlign: 'center' }}>
+                                    <Grid item xs={4}>
+                                        <Box sx={{ 
+                                            textAlign: 'center',
+                                            padding: '1rem',
+                                            borderRadius: '12px',
+                                            backgroundColor: 'rgba(102, 196, 255, 0.1)',
+                                            border: '1px solid rgba(102, 196, 255, 0.2)',
+                                            transition: 'all 0.3s ease',
+                                            '&:hover': {
+                                                backgroundColor: 'rgba(102, 196, 255, 0.2)',
+                                                transform: 'translateY(-3px)',
+                                                boxShadow: '0 8px 20px rgba(102, 196, 255, 0.2)'
+                                            }
+                                        }}>
                                             <Typography sx={{ 
-                                                fontSize: '2rem', 
-                                                fontWeight: 800, 
-                                                color: '#fff',
-                                                textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
+                                                fontSize: '1.8rem', 
+                                                fontWeight: 700, 
+                                                color: '#66C4FF',
+                                                marginBottom: '0.3rem'
                                             }}>
                                                 ⚡
                                             </Typography>
                                             <Typography sx={{ 
-                                                color: 'rgba(255, 255, 255, 0.9)', 
-                                                fontSize: '0.9rem',
-                                                fontWeight: 600 
+                                                color: '#7D99AA', 
+                                                fontSize: '0.85rem',
+                                                fontWeight: 500 
                                             }}>
-                                                Instant Connect
+                                                Instant
                                             </Typography>
                                         </Box>
                                     </Grid>
@@ -269,19 +299,19 @@ export default function LandingPage() {
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                animation: 'float 3s ease-in-out infinite',
+                                animation: 'float 4s ease-in-out infinite',
                                 '@keyframes float': {
                                     '0%, 100%': { transform: 'translateY(0px)' },
-                                    '50%': { transform: 'translateY(-20px)' }
+                                    '50%': { transform: 'translateY(-15px)' }
                                 }
                             }}>
                                 <img 
                                     src="/mobile.png" 
                                     alt="Video Call" 
                                     style={{
-                                        maxWidth: '100%',
+                                        maxWidth: '90%',
                                         height: 'auto',
-                                        filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.3))',
+                                        filter: 'drop-shadow(0 10px 25px rgba(102, 244, 255, 0.25))',
                                     }}
                                 />
                             </Box>

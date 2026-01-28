@@ -1,3 +1,3 @@
-const server = import.meta.env.VITE_API_URL;
+const server = process.env.REACT_APP_API_URL;
 
 export default server;

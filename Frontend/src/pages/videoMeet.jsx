@@ -869,12 +869,17 @@ export default function VideoMeetComponent() {
                                     data-socket={video.socketId}
                                     ref={ref => {
                                         if (ref && video.stream) {
+                                            console.log('Setting srcObject for', video.socketId, video.stream);
                                             ref.srcObject = video.stream;
-                                            ref.play().catch(e => console.log('Play error:', e));
+                                            ref.onloadedmetadata = () => {
+                                                console.log('Metadata loaded for', video.socketId);
+                                                ref.play().catch(e => console.log('Play error:', e));
+                                            };
                                         }
                                     }}
                                     autoPlay
                                     playsInline
+                                    muted={false}
                                     style={{
                                         width: '100%',
                                         height: '100%',
